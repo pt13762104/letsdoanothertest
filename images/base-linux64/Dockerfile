@@ -6,7 +6,7 @@ RUN \
     apt install binutils clang -y
     mkdir /opt/ffbuild
 
-ENV FFBUILD_TOOLCHAIN=x86_64-unknown-linux-gnu \
+ENV FFBUILD_TOOLCHAIN="" \
     FFBUILD_RUST_TARGET="x86_64-unknown-linux-gnu"
 
 RUN \
@@ -22,8 +22,7 @@ ADD gen-implib.sh /usr/bin/gen-implib
 RUN git clone --filter=blob:none --depth=1 https://github.com/yugr/Implib.so /opt/implib
 
 ENV PATH="${PATH}" \
-    FFBUILD_TARGET_FLAGS="--pkg-config=pkg-config --cross-prefix=${FFBUILD_TOOLCHAIN}- --arch=x86_64 --target-os=linux" \
-    FFBUILD_CROSS_PREFIX="${FFBUILD_TOOLCHAIN}-" \
+    FFBUILD_TARGET_FLAGS="--pkg-config=pkg-config --arch=x86_64 --target-os=linux" \
     FFBUILD_PREFIX=/opt/ffbuild \
     FFBUILD_DESTDIR=/opt/ffdest \
     FFBUILD_DESTPREFIX=/opt/ffdest/opt/ffbuild \
