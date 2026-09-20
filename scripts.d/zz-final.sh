@@ -55,7 +55,7 @@ ffbuild_depends() {
     echo openh264
     echo openjpeg
     echo openmpt
-    echo rav1e
+    # echo rav1e
     echo rubberband
     echo rustdedup
     echo schannel
