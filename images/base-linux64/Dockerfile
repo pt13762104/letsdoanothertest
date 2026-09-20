@@ -2,9 +2,8 @@ ARG GH_REPO=ghcr.io/btbn/ffmpeg-builds
 ARG BASE_TAG_SUFFIX=
 FROM $GH_REPO/base:latest${BASE_TAG_SUFFIX}
 # Prepare "cross" environment to heavily favour static builds
-RUN \
-    apt install binutils clang -y
-    mkdir /opt/ffbuild
+RUN apt install binutils clang -y
+RUN mkdir /opt/ffbuild
 
 ENV FFBUILD_TOOLCHAIN="" \
     FFBUILD_RUST_TARGET="x86_64-unknown-linux-gnu"
