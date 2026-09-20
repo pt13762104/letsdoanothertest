@@ -1,10 +1,10 @@
 [binaries]
 c = 'clang'
 cpp = 'clang++'
-ld = 'x86_64-ffbuild-linux-gnu-ld'
-ar = 'x86_64-ffbuild-linux-gnu-gcc-ar'
-ranlib = 'x86_64-ffbuild-linux-gnu-gcc-ranlib'
-strip = 'x86_64-ffbuild-linux-gnu-strip'
+ld = 'ld'
+ar = 'ar'
+ranlib = 'ranlib'
+strip = 'strip'
 
 [host_machine]
 system = 'linux'

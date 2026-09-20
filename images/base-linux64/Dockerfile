@@ -1,40 +1,11 @@
 ARG GH_REPO=ghcr.io/btbn/ffmpeg-builds
 ARG BASE_TAG_SUFFIX=
 FROM $GH_REPO/base:latest${BASE_TAG_SUFFIX}
-
-RUN --mount=src=ct-ng-config,dst=/.config \
-    git clone --filter=blob:none https://github.com/crosstool-ng/crosstool-ng.git /ct-ng && cd /ct-ng && \
-    ./bootstrap && \
-    ./configure --enable-local && \
-    make -j$(nproc) && \
-    cp /.config .config && \
-    ./ct-ng build && \
-    cd / && \
-    rm -rf ct-ng
-
 # Prepare "cross" environment to heavily favour static builds
 RUN \
-    find /opt/ct-ng \( -type l \
-        -and -name '*.so' \
-        -and -not -ipath '*plugin*' \
-        -and -not -name 'libdl.*' \
-        -and -not -name 'libc.*' \
-        -and -not -name 'libm.*' \
-        -and -not -name 'libmvec.*' \
-        -and -not -name 'librt.*' \
-        -and -not -name 'libpthread.*' \
-        \) -delete && \
-    find /opt/ct-ng \( \
-        -name 'libdl.a' \
-        -or -name 'libc.a' \
-        -or -name 'libm.a' \
-        -or -name 'libmvec.a' \
-        -or -name 'librt.a' \
-        -or -name 'libpthread.a' \
-        \) -delete && \
     mkdir /opt/ffbuild
 
-ENV FFBUILD_TOOLCHAIN=x86_64-ffbuild-linux-gnu \
+ENV FFBUILD_TOOLCHAIN=x86_64-unknown-linux-gnu \
     FFBUILD_RUST_TARGET="x86_64-unknown-linux-gnu"
 
 RUN \
@@ -58,12 +29,12 @@ ENV PATH="/opt/ct-ng/bin:${PATH}" \
     FFBUILD_CMAKE_TOOLCHAIN=/toolchain.cmake \
     PKG_CONFIG=pkg-config \
     PKG_CONFIG_LIBDIR=/opt/ffbuild/lib/pkgconfig:/opt/ffbuild/share/pkgconfig \
-    CC="${FFBUILD_TOOLCHAIN}-gcc" \
-    CXX="${FFBUILD_TOOLCHAIN}-g++" \
-    LD="${FFBUILD_TOOLCHAIN}-ld" \
-    AR="${FFBUILD_TOOLCHAIN}-gcc-ar" \
-    RANLIB="${FFBUILD_TOOLCHAIN}-gcc-ranlib" \
-    NM="${FFBUILD_TOOLCHAIN}-gcc-nm" \
+    CC="clang" \
+    CXX="clang++" \
+    LD="ld" \
+    AR="ar" \
+    RANLIB="ranlib" \
+    NM="nm" \
     CFLAGS="-static-libgcc -static-libstdc++ -I/opt/ffbuild/include -O2 -pipe -fPIC -DPIC -D_FORTIFY_SOURCE=2 -fstack-protector-strong -fstack-clash-protection -pthread" \
     CXXFLAGS="-static-libgcc -static-libstdc++ -I/opt/ffbuild/include -O2 -pipe -fPIC -DPIC -D_FORTIFY_SOURCE=2 -fstack-protector-strong -fstack-clash-protection -pthread" \
     LDFLAGS="-static-libgcc -static-libstdc++ -L/opt/ffbuild/lib -O2 -pipe -fstack-protector-strong -fstack-clash-protection -Wl,-z,relro,-z,now -pthread -lm" \
