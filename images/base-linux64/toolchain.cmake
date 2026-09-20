@@ -4,8 +4,8 @@ set(CMAKE_SYSTEM_VERSION 4.18.20)
 
 set(triple x86_64-ffbuild-linux-gnu)
 
-set(CMAKE_C_COMPILER ${triple}-gcc)
-set(CMAKE_CXX_COMPILER ${triple}-g++)
+set(CMAKE_C_COMPILER clang)
+set(CMAKE_CXX_COMPILER clang++)
 set(CMAKE_RANLIB ${triple}-gcc-ranlib)
 set(CMAKE_AR ${triple}-gcc-ar)
 

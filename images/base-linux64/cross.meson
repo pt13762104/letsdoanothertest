@@ -1,6 +1,6 @@
 [binaries]
-c = 'x86_64-ffbuild-linux-gnu-gcc'
-cpp = 'x86_64-ffbuild-linux-gnu-g++'
+c = 'clang'
+cpp = 'clang++'
 ld = 'x86_64-ffbuild-linux-gnu-ld'
 ar = 'x86_64-ffbuild-linux-gnu-gcc-ar'
 ranlib = 'x86_64-ffbuild-linux-gnu-gcc-ranlib'
