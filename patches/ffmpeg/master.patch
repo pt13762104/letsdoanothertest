@@ -65,7 +65,6 @@ index 0bcc176243..5082310875 100644
      { "qp", "Initial Quantizer level value", OFFSET(qp),
        AV_OPT_TYPE_INT, { .i64 = 0 }, 0, 63, VE },
      { "svtav1-params", "Set the SVT-AV1 configuration using a :-separated list of key=value parameters", OFFSET(svtav1_opts), AV_OPT_TYPE_DICT, { 0 }, 0, 0, VE },
-
 @@ -863,7 +863,7 @@ const FFCodec ff_libsvtav1_encoder = {
      .p.capabilities = AV_CODEC_CAP_DELAY | AV_CODEC_CAP_OTHER_THREADS,
      .caps_internal  = FF_CODEC_CAP_NOT_INIT_THREADSAFE |
